@@ -1,27 +1,59 @@
-# IonicAppRateService
+# AppRateService
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
 
-## Development server
+Show a popup to ask for rating the app.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Installation
 
-## Code scaffolding
+- Install via npm  
+`npm i @webfactor/ionic-app-rate-service`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Add `AppRateServiceModule.forRoot()` and `IonicStorageModule.forRoot(),`  to your ionic module imports.
 
-## Build
+If you don´t wannt to use default-text you must import the TranslateModule.forRoot too.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+In your json you create a entry like
 
-## Running unit tests
+```typescript
+ "appRateService": {
+      "title": "Rate %APPNAME%",
+      "message": "If you like it, please rate :)",
+      "cancel": "no, thanks"
+      "rate":"Rate now"
+```      
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Methods
 
-## Running end-to-end tests
+```typescript
+init(): void 
+```
+Start the counter. If no other threshold set the ratemessage show if the app opened 5 times.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```typescript
+async showDialog(): Provmise<void>
+```
+Show the message without waiting for threshold.
 
-## Further help
+```typescript
+setStoreIds(iosId: string; androidId: string ): void
+```
+Set storeids for both platforms. They must set or an error occure.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+```typescript
+setThreshold(count: number): void
+```
+Set threshold after how many appopens the message should show. Default is 5.
+
+
+## Example
+```typescript
+   constructor(public appRate: AppRateService) {
+   
+    this.appRate.setStoreIds("00000000000","androidId")
+    this.appRate.setThreshold(10);
+    this.appRate.init();
+
+  }
+``` 
+## Preview
+![Preview](/images/preview.png)
