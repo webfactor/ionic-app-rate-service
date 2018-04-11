@@ -56,14 +56,7 @@ export class AppRateService {
     }
 
     public async showDialog(): Promise<void> {
-        this.translations = await this.getTranslations();
-        console.log(this.translations.cancel);
-        this.dialog = {
-            title: this.translations.title || this.title,
-            message: this.translations.message || this.message,
-            cancel: this.translations.cancel || this.cancel,
-            rate: this.translations.rate || this.rate
-        };
+        this.getDialogTranslation();
 
         let alert = this.alertCtrl.create({
             title: this.dialog.title,
@@ -109,5 +102,15 @@ export class AppRateService {
         else return;
 
         this.inAppBrowser.create(encodeURI(url), '_system');
+    }
+
+    private async getDialogTranslation(): Promise<void> {
+        this.translations = await this.getTranslations();
+        this.dialog = {
+            title: this.translations.title || this.title,
+            message: this.translations.message || this.message,
+            cancel: this.translations.cancel || this.cancel,
+            rate: this.translations.rate || this.rate
+        };
     }
 }
