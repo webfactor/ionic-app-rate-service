@@ -1,18 +1,16 @@
+import { AppRateService } from './providers/app-rate-service';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-export * from './providers/app-rate-service';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @NgModule({
-  imports: [CommonModule],
-  declarations: [AppRateServiceModule],
-  exports: [AppRateServiceModule]
+    imports: [CommonModule]
 })
 export class AppRateServiceModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: AppRateServiceModule,
-      providers: [AppRateServiceModule]
-    };
-  }
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: AppRateServiceModule,
+            providers: [AppRateService, InAppBrowser]
+        };
+    }
 }
