@@ -30,7 +30,7 @@ init(): void
 Start the counter. If no other threshold set the ratemessage show if the app opened 5 times.
 
 ```typescript
-async showDialog(): Provmise<void>
+async showDialog(): Promise<void>
 ```
 Show the message without waiting for threshold.
 
