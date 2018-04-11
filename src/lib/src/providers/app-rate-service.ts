@@ -3,8 +3,10 @@ import { Injectable } from '@angular/core';
 import { Platform, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
+
+
 @Injectable()
-export class AppRateServiceProvider {
+export class AppRateService{
     appStarts = 0;
     threshold: number = 5;
     storeIds: any = {
