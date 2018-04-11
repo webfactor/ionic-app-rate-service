@@ -3,6 +3,7 @@ const rollupGlobals = {
   '@ionic-native/in-app-browser': '@ionic-native/in-app-browser',
   'ionic-angular':'ionic-angular',
   '@ionic/storage': '@ionic/storage',
+  '@ngx-translate/core':'@ngx-translate/core',
 
 
   'date-fns': 'date.fns',

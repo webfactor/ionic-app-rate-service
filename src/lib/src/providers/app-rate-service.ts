@@ -2,31 +2,30 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Injectable } from '@angular/core';
 import { Platform, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-
-
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
-export class AppRateService{
+export class AppRateService {
+    translations: any = {};
+    rate: string = 'Jetzt bewerten';
+    cancel: string = 'Nein, danke';
+    title: string = 'Bewerte uns';
+    message: string = 'Wenn Dir unsere App gefällt, würdest Du Sie bitte bewerten? Das geht ganz schnell! :-) Danke für die Unterstützung!';
+
     appStarts = 0;
     threshold: number = 5;
     storeIds: any = {
-        ios: '%APPSTORE_ID%',
-        android: 'de.webfactor.jumpin'
+        ios: '',
+        android: ''
     };
-    appName = 'JumpIn';
-    dialog: any = {
-        title: `Bewerte ${this.appName}`,
-        message:
-            `Wenn Dir ${this.appName} gefällt, würdest Du es bitte bewerten? Das geht ganz schnell! :-) Danke für die Unterstützung!`,
-        cancel: 'Nein, danke',
-        rate: 'Jetzt bewerten'
-    };
+    dialog: any;
 
     constructor(
         public platform: Platform,
         private storage: Storage,
         private alertCtrl: AlertController,
-        private inAppBrowser: InAppBrowser
+        private inAppBrowser: InAppBrowser,
+        protected translate: TranslateService
     ) {}
 
     public init() {
@@ -52,7 +51,20 @@ export class AppRateService{
         this.storage.set('appStarts', this.appStarts).then(() => this.showDialogWithThreshold());
     }
 
-    public showDialog(): void {
+    private getTranslations(): Promise<any> {
+        return this.translate.get('appRateService').toPromise();
+    }
+
+    public async showDialog(): Promise<void> {
+        this.translations = await this.getTranslations();
+        console.log(this.translations.cancel);
+        this.dialog = {
+            title: this.translations.title || this.title,
+            message: this.translations.message || this.message,
+            cancel: this.translations.cancel || this.cancel,
+            rate: this.translations.rate || this.rate
+        };
+
         let alert = this.alertCtrl.create({
             title: this.dialog.title,
             message: this.dialog.message,
@@ -75,6 +87,17 @@ export class AppRateService{
 
     private showDialogWithThreshold(): void {
         if (this.appStarts == this.threshold) this.showDialog();
+    }
+
+    public setStoreIds(iosId: string, androidId: string): void {
+        this.storeIds = {
+            ios: iosId,
+            android: androidId
+        };
+    }
+
+    public setThreshold(count: number): void {
+        this.threshold = count;
     }
 
     private showAppStore(): void {
