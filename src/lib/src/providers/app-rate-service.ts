@@ -88,11 +88,8 @@ export class AppRateService {
         if (this.appStarts == this.threshold) this.showDialog();
     }
 
-    public setStoreIds(iosId: string, androidId: string): void {
-        this.storeIds = {
-            ios: iosId,
-            android: androidId
-        };
+    public setStoreIds(ios: string, android: string): void {
+        this.storeIds = { ios, android };
     }
 
     public setThreshold(count: number): void {

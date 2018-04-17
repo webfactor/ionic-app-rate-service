@@ -35,7 +35,7 @@ async showDialog(): Promise<void>
 Show the message without waiting for threshold.
 
 ```typescript
-setStoreIds(iosId: string; androidId: string ): void
+setStoreIds(ios: string, android: string): void
 ```
 Set storeids for both platforms. They must set or an error occure.
 
