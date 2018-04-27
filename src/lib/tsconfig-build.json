@@ -33,7 +33,7 @@
     "annotateForClosureCompiler": true,
     "strictMetadataEmit": true,
     "flatModuleOutFile": "index.js",
-    "flatModuleId": "ionic-app-rate-service",
+    "flatModuleId": "@webfactor/ionic-app-rate-service",
     "skipTemplateCodegen": true
   }
 }
